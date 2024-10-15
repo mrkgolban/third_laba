@@ -25,7 +25,10 @@ bool seddle(int* a, int row, int column, int* seddle, int* maximum, int* minimum
             deltay2 = a[row * (i + 1) + j] - elem;
             if ((deltax1 > 0 && deltax2 > 0 && deltay1 < 0 && deltay2 < 0) || (deltax1 < 0 && deltax2 < 0 && deltay1 > 0 && deltay2 > 0))
             {
-                *seddle = elem;
+                seddle[0] = elem;
+                seddle[1] = i;
+                seddle[2] = j;
+
                 return true;
             }
         }
@@ -39,17 +42,21 @@ bool seddle(int* a, int row, int column, int* seddle, int* maximum, int* minimum
 
 int main()
 {
-    int m = 3;
-    int n = 3;
+    int m, n;
+    printf("Кол-во строк: ");
+    scanf("%d", &m);
+    printf("Кол-во столбцов: ");
+    scanf("%d", &n);
     int* max = (int* )malloc(4);
     int* min = (int* )malloc(4);
     *max = -pow(10, 9);
     *min = pow(10, 9);
-    int matrix[m * n];
-    int* seddle_point = (int*)malloc(sizeof(int));
+    int* matrix = calloc(m * n, sizeof(int));
+
+    int* seddle_point = calloc(3, sizeof(int));
     if (seddle(matrix, m, n, seddle_point, max, min))
     {
-        printf("The seddle point is: %d\n", *seddle_point);    
+        printf("The seddle point is %d, with coordinates (%d; %d)\n", seddle_point[0], seddle_point[1], seddle_point[2]);    
     }
     else
     {
